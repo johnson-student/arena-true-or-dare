@@ -19,7 +19,7 @@ const dareCards = [
 
 // Reusable animated virtual card base
 const VirtualCardBase = ({ type, text, children, isAbilityView }) => (
-  <div className={`relative w-[28rem] min-h-[420px] max-w-lg p-12 rounded-3xl transition-all duration-500 transform border-b-8 animate-[cardReveal_0.5s_ease-out_forwards]
+  <div className={`relative w-28rem min-h-420px max-w-lg p-12 rounded-3xl transition-all duration-500 transform border-b-8 animate-[cardReveal_0.5s_ease-out_forwards]
     ${isAbilityView ? 'bg-zinc-800/80 border-zinc-700' : type === 'truth' ? 'bg-brand-blue/90 border-brand-blue/70' : 'bg-brand-red/90 border-brand-red/70'}
     ${isAbilityView ? 'shadow-[0_0_20px_#ffffff22]' : type === 'truth' ? 'shadow-[0_0_30px_#3B82F6cc]' : 'shadow-[0_0_30px_#E13B31cc]'}
     `}>
