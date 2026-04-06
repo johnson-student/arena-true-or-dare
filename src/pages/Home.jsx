@@ -32,6 +32,12 @@ export default function Home() {
       icon: <Shield size={10} />,
       color: "bg-green-600",
     },
+    {
+      name: "DECIDER",
+      lives: 3,
+      icon: <Shield size={10} />,
+      color: "bg-green-600",
+    },
 
   ];
   return (
