@@ -114,7 +114,7 @@ export default function SpinWheel({ players = [] }) {
         onClick={() => setWinner(null)}
         className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold hover:scale-105 transition"
       >
-        Close
+        <link to="/home">next game</link>
       </button>
     </div>
   </div>

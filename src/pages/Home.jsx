@@ -62,7 +62,11 @@ export default function Home() {
 
         <div className="lg:col-span-7 relative flex justify-center lg:justify-end">
           <div className="relative w-full max-w-[550px] aspect-square flex items-center justify-center">
-            <SpinWheel players={players} />
+          <GameWheel
+            showSpin={false}
+            animation={true}
+            players={players.map((p) => p.name)}
+          />
             <PlayerListHUD players={players} />
             <LiveBadge/>
           </div>
