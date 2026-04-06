@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import Settings from "./Setting";
 
-export default function PlayerListGame({ players = [], setPlayers }) {
+export default function PlayerListGame({ players = [], setPlayers, lives, abilities }) {
   const [newPlayer, setNewPlayer] = useState("");
-
+  const [abCount, setAbCount] = useState(2);
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
 
@@ -89,7 +90,10 @@ export default function PlayerListGame({ players = [], setPlayers }) {
               <div>
                 <p className="font-bold text-white">{player.name}</p>
                 <p className="text-[10px] text-gray-400">
-                  lives {player.lives} <span className="text-green-500 ml-1">●</span>
+                  {"❤️".repeat(lives)} <span className="text-green-500 ml-1">●</span>
+                </p>
+                <p className="text-[10px] text-gray-400">
+                  {abCount >= abilities ? "Unlimited Abilities 🔥" : `Abilities: ${"⚡".repeat(abCount)}`} 
                 </p>
               </div>
             </div>

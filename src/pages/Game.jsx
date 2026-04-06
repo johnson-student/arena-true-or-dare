@@ -19,7 +19,8 @@ const Game = () => {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#0a0a16] font-sans text-white">
-            {/* Background */}
+
+      {/* Background */} 
       <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0 opacity-10"
