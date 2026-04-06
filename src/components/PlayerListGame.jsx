@@ -11,7 +11,7 @@ export default function PlayerListGame({ players = [], setPlayers, lives, abilit
       name: newPlayer.trim(),
       icon: "🎯",
       color: "bg-blue-500",
-      lives: 1,
+      lives: lives,
     };
 
     setPlayers(prev => [...prev, player]);

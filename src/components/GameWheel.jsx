@@ -131,7 +131,7 @@ export default function SpinWheel({ players = [], showSpin = true, animation = f
 
 
             <Link
-              to="/home"
+              to="/card"
               onClick={() => setWinner(null)}
               className="px-6 py-3 rounded-lg bg-gray-700 text-white font-bold hover:scale-105 transition mt-4"
             >
