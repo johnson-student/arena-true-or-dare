@@ -31,7 +31,7 @@ export default function PlayerListGame({ players = [], setPlayers, lives, abilit
   };
 
   return (
-    <div className="absolute top-1/2 -translate-y-1/2 right-6 w-[350px] md:w-[400px] h-[500px] bg-[#0c0c1e]/90 border border-[#ff3b5c]/40 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(255,59,92,0.2)] z-20 backdrop-blur-md p-4 flex flex-col gap-3">
+    <div className="   right-6 w-[350px] md:w-[400px] h-[500px] bg-[#0c0c1e]/90 border border-[#ff3b5c]/40 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(255,59,92,0.2)] z-20 backdrop-blur-md p-4 flex flex-col gap-3">
 
       {/* 🔹 Input Section */}
       <div className="flex gap-2 mb-2">
