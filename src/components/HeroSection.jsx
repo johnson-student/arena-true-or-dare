@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -16,9 +17,9 @@ export default function HeroSection() {
       </p>
 
       <div className="flex flex-wrap gap-4 pt-4">
-        <button className="px-7 py-3.5 bg-[#9c243a] hover:bg-[#b82c46] rounded-md font-bold text-sm transition-all shadow-[0_5px_20px_rgba(156,36,58,0.5)] uppercase tracking-wider">
-          Start Spin
-        </button>
+        <Link to="/game" className="px-7 py-3.5 bg-[#9c243a] hover:bg-[#b82c46] rounded-md font-bold text-sm transition-all shadow-[0_5px_20px_rgba(156,36,58,0.5)] uppercase tracking-wider">
+          Start Game
+        </Link>
 
         <button className="px-7 py-3.5 bg-transparent border-2 border-[#3b3b5c] hover:border-blue-500 rounded-md font-bold text-sm transition-all uppercase tracking-wider hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
           Customize Names

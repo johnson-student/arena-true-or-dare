@@ -1,34 +1,5 @@
-import React from "react";
-import { Shield, Trophy, Zap, Crown } from "lucide-react";
 
-export default function PlayerListHUD() {
-  const players = [
-    {
-      name: "CHANCE PICK",
-      level: 10,
-      icon: <Crown size={10} />,
-      color: "bg-blue-600",
-    },
-    {
-      name: "LUCKY NAME",
-      level: 5,
-      icon: <Zap size={10} />,
-      color: "bg-purple-600",
-    },
-    {
-      name: "FORTUNE SELECT",
-      level: 12,
-      icon: <Trophy size={10} />,
-      color: "bg-red-600",
-    },
-    {
-      name: "DECIDER",
-      level: 7,
-      icon: <Shield size={10} />,
-      color: "bg-green-600",
-    },
-  ];
-
+export default function PlayerListHUD({players}) {
   return (
     <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[240px] h-[360px] bg-[#0c0c1e]/85 border border-[#ff3b5c]/30 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(255,59,92,0.15)] z-20 backdrop-blur-sm p-4 flex flex-col gap-3">
       <div className="border-b border-white/10 pb-2">
@@ -53,7 +24,7 @@ export default function PlayerListHUD() {
               <div>
                 <p className="font-bold text-white text-[11px]">{player.name}</p>
                 <p className="text-[9px] text-gray-500">
-                  Level {player.level}{" "}
+                  lives {player.lives}{" "}
                   <span className="text-green-500 ml-1">●</span>
                 </p>
               </div>
