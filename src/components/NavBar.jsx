@@ -1,4 +1,8 @@
+import { NavLink , Link } from "react-router-dom";
 export default function Navbar() {
+  const navLinkClass = ({ isActive }) =>
+    `transition-colors ${isActive ? "text-white" : "text-gray-400 hover:text-white"}`;
+
   return (
     <nav className="relative z-10 flex items-center justify-between px-6 py-4 backdrop-blur-md bg-[#0a0a16]/70 border-b border-white/5 md:px-12">
       {/* Logo */}
@@ -6,28 +10,28 @@ export default function Navbar() {
         <div className="relative w-8 h-8 bg-gradient-to-br from-red-500 to-blue-600 rounded-lg flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(239,68,68,0.5)]">
           SL
         </div>
-        <span className="text-xl font-black tracking-wider uppercase">
+        <Link to="/" className="text-xl font-black tracking-wider uppercase cursor-pointer ">
           Spin Legends
-        </span>
+        </Link>
       </div>
 
       {/* Desktop Links */}
-      <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-        <a href="#" className="hover:text-white transition-colors">
-          Overview
-        </a>
-        <a href="#" className="hover:text-white transition-colors">
+      <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+        <NavLink to="/" className={navLinkClass}>
+          Home
+        </NavLink>
+        <NavLink to="/features" className={navLinkClass}>
           Features
-        </a>
-        <a href="#" className="hover:text-white transition-colors">
+        </NavLink>
+        <NavLink to="/how-it-works" className={navLinkClass}>
           How It Works
-        </a>
-        <a href="#" className="hover:text-white transition-colors">
+        </NavLink>
+        <NavLink to="/leaderboards" className={navLinkClass}>
           Leaderboards
-        </a>
-        <a href="#" className="hover:text-white transition-colors">
+        </NavLink>
+        <NavLink to="/faq" className={navLinkClass}>
           FAQ
-        </a>
+        </NavLink>
       </div>
 
       {/* Auth Buttons */}

@@ -4,7 +4,7 @@ export default function PlayerListHUD({players}) {
     <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[240px] h-[360px] bg-[#0c0c1e]/85 border border-[#ff3b5c]/30 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.6),0_0_20px_rgba(255,59,92,0.15)] z-20 backdrop-blur-sm p-4 flex flex-col gap-3">
       <div className="border-b border-white/10 pb-2">
         <h3 className="font-bold text-xs text-white/50 uppercase tracking-wider">
-          Registered Names
+          Player Names
         </h3>
         <p className="text-[10px] text-gray-500">Current Session</p>
       </div>

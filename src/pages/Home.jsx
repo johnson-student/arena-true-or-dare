@@ -8,25 +8,25 @@ import { Shield, Trophy, Zap, Crown } from "lucide-react";
 export default function Home() {
   const players = [
     {
-      name: "CHANCE PICK",
+      name: "PLAYER 1",
       lives: 3,
       icon: <Crown size={10} />,
       color: "bg-blue-600",
     },
     {
-      name: "LUCKY NAME",
+      name: "PLAYER 2",
       lives: 3,
       icon: <Zap size={10} />,
       color: "bg-purple-600",
     },
     {
-      name: "FORTUNE SELECT",
+      name: "PLAYER 3",
       lives: 3,
       icon: <Trophy size={10} />,
       color: "bg-red-600",
     },
     {
-      name: "DECIDER",
+      name: "PLAYER 4",
       lives: 3,
       icon: <Shield size={10} />,
       color: "bg-green-600",
