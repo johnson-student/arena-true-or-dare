@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import Settings from "./Setting";
 
-export default function PlayerListGame({ players = [], setPlayers, lives, abilities }) {
+export default function PlayerListGame({ 
+  players = [], 
+  setPlayers, 
+  globalLives = 3,
+  globalAbilities = 2,
+  playerStats = {}
+}) {
   const [newPlayer, setNewPlayer] = useState("");
-  const [abCount, setAbCount] = useState(2);
+
   const handleAddPlayer = () => {
     if (!newPlayer.trim()) return;
 
+    const colors = ['bg-blue-600', 'bg-purple-600', 'bg-red-600', 'bg-green-600', 'bg-yellow-600', 'bg-pink-600'];
+    const icons = ['🎯', '⚡', '🔥', '💀', '👑', '⭐'];
+    
     const player = {
-      name: newPlayer.trim(),
-      icon: "🎯",
-      color: "bg-blue-500",
-      lives: lives,
+      name: newPlayer.trim().toUpperCase(),
+      icon: icons[Math.floor(Math.random() * icons.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
     };
 
     setPlayers(prev => [...prev, player]);
@@ -30,10 +37,26 @@ export default function PlayerListGame({ players = [], setPlayers, lives, abilit
     if (e.key === "Enter") handleAddPlayer();
   };
 
-  return (
-    <div className="   right-6 w-[350px] md:w-[400px] h-[500px] bg-[#0c0c1e]/90 border border-[#ff3b5c]/40 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(255,59,92,0.2)] z-20 backdrop-blur-md p-4 flex flex-col gap-3">
+  // Get player's current stats
+  const getPlayerStats = (playerName) => {
+    const stats = playerStats[playerName];
+    if (stats) {
+      return {
+        lives: stats.lives,
+        abilities: stats.abilities,
+        completedRounds: stats.completedRounds || 0
+      };
+    }
+    return {
+      lives: globalLives,
+      abilities: globalAbilities,
+      completedRounds: 0
+    };
+  };
 
-      {/* 🔹 Input Section */}
+  return (
+    <div className="w-[350px] md:w-[400px] h-[500px] bg-[#0c0c1e]/90 border border-[#ff3b5c]/40 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(255,59,92,0.2)] backdrop-blur-md p-4 flex flex-col gap-3">
+      {/* Input Section */}
       <div className="flex gap-2 mb-2">
         <input
           type="text"
@@ -56,7 +79,7 @@ export default function PlayerListGame({ players = [], setPlayers, lives, abilit
         </button>
       </div>
 
-      {/* 🔹 Remove All Button */}
+      {/* Remove All Button */}
       {players.length > 0 && (
         <button
           onClick={handleRemoveAll}
@@ -69,58 +92,94 @@ export default function PlayerListGame({ players = [], setPlayers, lives, abilit
       {/* Header */}
       <div className="border-b border-white/10 pb-2">
         <h3 className="font-bold text-center text-sm text-white/60 uppercase tracking-wider">
-          Players
+          Players List
         </h3>
         <p className="text-[10px] text-gray-400 text-center">Current Session</p>
       </div>
 
       {/* Player List */}
-      <div className="space-y-2 overflow-y-auto pr-1 custom-scrollbar text-sm flex-1">
-        {players.map((player, index) => (
-          <div
-            key={index}
-            className="flex items-center justify-between p-2 bg-white/5 rounded-md border border-white/5 hover:border-blue-500/30 transition-all"
-          >
-            <div className="flex items-center gap-3">
-              <div
-                className={`w-6 h-6 ${player.color} rounded-full flex items-center justify-center text-xs`}
-              >
-                {player.icon}
-              </div>
-              <div>
-                <p className="font-bold text-white">{player.name}</p>
-                <p className="text-[10px] text-gray-400">
-                  {"❤️".repeat(lives)} <span className="text-green-500 ml-1">●</span>
-                </p>
-                <p className="text-[10px] text-gray-400">
-                  {abCount >= abilities ? "Unlimited Abilities 🔥" : `Abilities: ${"⚡".repeat(abCount)}`} 
-                </p>
-              </div>
-            </div>
-            {/* 🔹 Remove Single Player Button */}
-            <button
-              onClick={() => handleRemovePlayer(index)}
-              className="text-red-500 font-bold px-2 py-1 text-xs rounded-md hover:bg-red-500/10 transition"
-            >
-              Remove
-            </button>
+      <div className="space-y-2 overflow-y-auto pr-1 flex-1">
+        {players.length === 0 ? (
+          <div className="text-center text-gray-500 text-sm py-8">
+            No players yet. Add some!
           </div>
-        ))}
+        ) : (
+          players.map((player, index) => {
+            const stats = getPlayerStats(player.name);
+            const isDead = stats.lives <= 0;
+            
+            return (
+              <div
+                key={index}
+                className={`flex items-center justify-between p-2 rounded-md border transition-all ${
+                  isDead 
+                    ? 'bg-red-900/30 border-red-500/50 opacity-60' 
+                    : 'bg-white/5 border-white/5 hover:border-blue-500/30'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-6 h-6 ${player.color} rounded-full flex items-center justify-center text-xs`}
+                  >
+                    {player.icon}
+                  </div>
+                  <div>
+                    <p className={`font-bold text-sm ${isDead ? 'text-gray-400 line-through' : 'text-white'}`}>
+                      {player.name}
+                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      {/* Lives display */}
+                      <div className="flex items-center gap-0.5">
+                        <span className="text-[9px] text-gray-400">❤️</span>
+                        <span className={`text-[10px] font-bold ${stats.lives <= 1 && !isDead ? 'text-red-400' : 'text-white'}`}>
+                          {stats.lives}
+                        </span>
+                      </div>
+                      {/* Abilities display */}
+                      <div className="flex items-center gap-0.5">
+                        <span className="text-[9px] text-gray-400">⚡</span>
+                        <span className={`text-[10px] font-bold ${stats.abilities > 0 ? 'text-yellow-400' : 'text-gray-500'}`}>
+                          {stats.abilities}
+                        </span>
+                      </div>
+                      {/* Completed rounds */}
+                      <div className="flex items-center gap-0.5">
+                        <span className="text-[9px] text-gray-400">🏆</span>
+                        <span className="text-[10px] text-green-400 font-bold">
+                          {stats.completedRounds}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Status Badge */}
+                {isDead ? (
+                  <span className="text-[10px] font-bold text-red-400 bg-red-500/20 px-2 py-0.5 rounded-full">
+                    ELIMINATED
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => handleRemovePlayer(index)}
+                    className="text-red-500 font-bold px-2 py-1 text-xs rounded-md hover:bg-red-500/10 transition"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            );
+          })
+        )}
       </div>
 
-      {/* Scrollbar styles */}
-      <style jsx>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(59, 130, 246, 0.3);
-          border-radius: 10px;
-        }
-      `}</style>
+      {/* Legend */}
+      <div className="border-t border-white/10 pt-2 mt-1">
+        <div className="flex justify-center gap-4 text-[9px] text-gray-500">
+          <span className="flex items-center gap-1">❤️ Lives</span>
+          <span className="flex items-center gap-1">⚡ Abilities</span>
+          <span className="flex items-center gap-1">🏆 Rounds Won</span>
+        </div>
+      </div>
     </div>
   );
 }
