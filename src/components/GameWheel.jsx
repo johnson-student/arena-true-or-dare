@@ -1,30 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function SpinWheel({ players = [] }) {
+export default function SpinWheel({ players = [], showSpin = true, animation = false }) {
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(animation);
+
+  // Handle continuous animation
+  useEffect(() => {
+    if (animation && !spinning) {
+      setIsAnimating(true);
+      // Continuous rotation animation
+      const interval = setInterval(() => {
+        setRotation(prev => (prev + 2) % 360);
+      }, 50);
+      return () => clearInterval(interval);
+    } else {
+      setIsAnimating(false);
+    }
+  }, [animation, spinning]);
 
   const spinWheel = () => {
     if (spinning || players.length === 0) return;
+    
+    // Stop continuous animation if active
+    setIsAnimating(false);
     setSpinning(true);
 
     const anglePerSlice = 360 / players.length;
-
     const extraSpins = 5 * 360;
     const randomOffset = Math.random() * 360;
-
     const newRotation = rotation + extraSpins + randomOffset;
 
     setRotation(newRotation);
 
     setTimeout(() => {
       const normalized = newRotation % 360;
-      const index =
-        Math.floor((360 - normalized) / anglePerSlice) % players.length;
+      const index = Math.floor((360 - normalized) / anglePerSlice) % players.length;
       const winner = players[index];
       setSpinning(false);
       setWinner(winner);
+      
+      // Restart continuous animation if animation prop is true
+      if (animation) {
+        setIsAnimating(true);
+      }
     }, 4000);
   };
 
@@ -32,14 +52,25 @@ export default function SpinWheel({ players = [] }) {
     <div className="flex flex-col items-center gap-6">
       {/* WHEEL */}
       <div className="relative w-[340px] h-[340px] md:w-[500px] md:h-[500px] rounded-full border-4 border-[#3b3b5c] bg-[#111126] shadow-[0_0_50px_rgba(59,130,246,0.2)] flex items-center justify-center overflow-hidden">
+        
+        {/* Animated outer ring - only when animation is true and not spinning */}
+        {animation && !spinning && (
+          <div className="absolute inset-0 rounded-full">
+            <div className="absolute inset-0 animate-[spin_20s_linear_infinite] rounded-full">
+              <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-red-500/40 border-r-blue-500/30 border-b-purple-500/30 border-l-cyan-500/20" />
+            </div>
+          </div>
+        )}
 
         {/* SPINNING LAYER */}
         <div
-          className="absolute inset-0 transition-transform duration-[4000ms] ease-out"
+          className={`absolute inset-0 ${!spinning && animation ? '' : 'transition-transform duration-[4000ms] ease-out'}`}
           style={{ transform: `rotate(${rotation}deg)` }}
         >
-          {/* Outer Energy Ring */}
-          <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-red-500/40 border-r-blue-500/30 border-b-purple-500/30 border-l-cyan-500/20" />
+          {/* Outer Energy Ring (static when not animating) */}
+          {(!animation || spinning) && (
+            <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-red-500/40 border-r-blue-500/30 border-b-purple-500/30 border-l-cyan-500/20" />
+          )}
 
           {/* Inner Circles */}
           <div className="absolute inset-4 rounded-full border border-dashed border-blue-500/30" />
@@ -48,16 +79,12 @@ export default function SpinWheel({ players = [] }) {
           {/* Slices */}
           {players.map((player, i) => {
             const angle = 360 / players.length;
-
-            // Lines at slice boundaries
             const lineRotation = i * angle;
-
-            // Player names at center of slice
             const textRotation = i * angle + angle / 2;
 
             return (
               <React.Fragment key={i}>
-                {/* 🔹 Slice boundary line */}
+                {/* Slice boundary line */}
                 <div
                   className="absolute top-1/2 left-1/2 origin-bottom -translate-x-1/2 -translate-y-full"
                   style={{ transform: `rotate(${lineRotation}deg)` }}
@@ -65,7 +92,7 @@ export default function SpinWheel({ players = [] }) {
                   <div className="w-[2px] h-[250px] bg-gradient-to-b from-transparent via-blue-500/40 to-transparent" />
                 </div>
 
-                {/* 🔹 Player name */}
+                {/* Player name */}
                 <div
                   className="absolute top-1/2 left-1/2 origin-center -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
                   style={{
@@ -90,35 +117,36 @@ export default function SpinWheel({ players = [] }) {
         <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[24px] border-b-red-400 z-20" />
       </div>
 
-      {/* Spin Button */}
-      <button
-        onClick={spinWheel}
-        className="cursor-pointer mt-10 px-10 py-5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition disabled:opacity-50"
-      >
-        {spinning ? "Spinning..." : "SPIN"}
-        
-      </button>
-{winner && (
-  <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-    <div className="bg-[#111126] border border-blue-500/30 rounded-2xl p-10 text-center shadow-[0_0_40px_rgba(59,130,246,0.3)] animate-scaleIn">
-      
-      <h2 className="text-3xl font-bold text-white mb-4">
-        🎉 Winner 🎉
-      </h2>
+      {/* Spin Button - Optional */}
+      {showSpin && (
+        <button
+          onClick={spinWheel}
+          disabled={spinning || players.length === 0}
+          className="cursor-pointer mt-10 px-10 py-5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {spinning ? "Spinning..." : "SPIN"}
+        </button>
+      )}
 
-      <div className="text-4xl font-extrabold text-green-400 mb-6">
-        {winner}
-      </div>
-
-      <button
-        onClick={() => setWinner(null)}
-        className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold hover:scale-105 transition"
-      >
-        Close
-      </button>
-    </div>
-  </div>
-)}
+      {/* Winner Modal */}
+      {winner && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="bg-[#111126] border border-blue-500/30 rounded-2xl p-10 text-center shadow-[0_0_40px_rgba(59,130,246,0.3)] animate-scaleIn">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              🎉 Winner 🎉
+            </h2>
+            <div className="text-4xl font-extrabold text-green-400 mb-6">
+              {winner}
+            </div>
+            <button
+              onClick={() => setWinner(null)}
+              className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold hover:scale-105 transition"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
