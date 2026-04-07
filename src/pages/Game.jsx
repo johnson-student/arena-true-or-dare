@@ -195,12 +195,6 @@ const Game = () => {
     };
   };
 
-  const rotateWheel = ()=>{
-      const getRandom = Math.random() * (360 - rotation) + 80 ;
-      
-      setRotation(getRandom);
-  }
-
   const currentStats = getCurrentPlayerStats();
 
   return (
