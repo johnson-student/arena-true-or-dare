@@ -49,8 +49,7 @@ export default function SpinWheel({
             animation ? "animate-[spin_14s_linear_infinite]" : ""
           }`}
           style={{ transform: `rotate(${rotation}deg)` ,
-                  transitionDuration: spinning ? `${spintime}ms` : '0ms'}}
-        >
+                  transitionDuration: spinning ? `${spintime}ms` : '0ms'}}>
           {/* Outer Energy Ring */}
           <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-red-500/40 border-r-blue-500/30 border-b-purple-500/30 border-l-cyan-500/20" />
 
@@ -78,10 +77,10 @@ export default function SpinWheel({
                 <div
                   className="absolute top-1/2 left-1/2 origin-center -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
                   style={{
-                    transform: `rotate(${textRotation}deg) translateY(-225px)`,
+                    transform: `rotate(${textRotation}deg) translateY(-150px)`,
                   }}
                 >
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 text-[15px] font-bold whitespace-nowrap text-blue-400">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 md:text-[15px] text-[10px] font-bold whitespace-nowrap text-blue-400 text-shadow-[0_0_5px_rgba(59,130,246,0.8)]">
                     {player}
                   </div>
                 </div>
