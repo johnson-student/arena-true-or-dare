@@ -5,6 +5,8 @@ export default function Setting({
   setLives,
   abilities,
   setAbilities,
+  spintime,
+  setSpintime,
   onClose
 }) {
   return (
@@ -47,6 +49,18 @@ export default function Setting({
         <div className="text-xl">
           {"⚡".repeat(abilities)}
         </div>
+        <p className="mb-2 text-gray-300">
+          Spintime: <span className="text-white font-bold">{spintime} ms</span>
+        </p>
+        <input
+          type="range"
+          min="1000"
+          max="10000"
+          step="1000"
+          value={spintime}
+          onChange={(e) => setSpintime(Number(e.target.value))}
+          className="w-full mb-4 accent-blue-500 cursor-pointer"
+        />
       </div>
     </div>
   );

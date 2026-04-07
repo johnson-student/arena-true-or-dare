@@ -25,6 +25,7 @@ const Game = () => {
   const [abilities, setAbilities] = useState(2);
   const [showPunishment, setShowPunishment] = useState(false);
   const [punishedPlayer, setPunishedPlayer] = useState(null);
+  const [spintime, setSpintime] = useState(4000);
   
   // Game phase: 'spin' or 'card'
   const [gamePhase, setGamePhase] = useState('spin');
@@ -37,7 +38,7 @@ const Game = () => {
     // Check if player is eliminated
     const playerStat = playerStats[winner];
     if (playerStat && playerStat.lives <= 0) {
-      alert(`${winner} is eliminated! Please remove them or reset.`);
+
       return;
     }
     setCurrentPlayer(winner);
@@ -45,11 +46,6 @@ const Game = () => {
   };
 
   const handleBackToSpin = () => {
-    setGamePhase('spin');
-    setCurrentPlayer(null);
-  };
-
-  const handleGameOver = () => {
     setGamePhase('spin');
     setCurrentPlayer(null);
   };
@@ -151,6 +147,19 @@ const Game = () => {
         <SettingsIcon size={20} />
       </button>
 
+      {/* Settings Modal */}
+      {showSettings && (
+        <Setting
+          lives={lives}
+          setLives={setLives}
+          abilities={abilities}
+          setAbilities={setAbilities}
+          spintime={spintime}
+          setSpintime={setSpintime}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
+
       {/* Back Button (only in card phase) */}
       {gamePhase === 'card' && (
         <button
@@ -162,16 +171,6 @@ const Game = () => {
         </button>
       )}
 
-      {/* Settings Modal */}
-      {showSettings && (
-        <Setting
-          lives={lives}
-          setLives={setLives}
-          abilities={abilities}
-          setAbilities={setAbilities}
-          onClose={() => setShowSettings(false)}
-        />
-      )}
 
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-center min-h-screen px-6 gap-12 py-20">
         
@@ -180,6 +179,8 @@ const Game = () => {
             <SpinWheel 
               players={players.map((p) => p.name)} 
               onSpinComplete={handleSpinComplete}
+              spintime={spintime}
+
             />
             <PlayerListGame
               players={players}
@@ -197,7 +198,6 @@ const Game = () => {
             initialAbilities={currentStats.abilities}
             initialCompletedRounds={currentStats.completedRounds}
             maxAbilities={abilities}  // ← ADD THIS LINE - passes ability limit from settings
-            onGameOver={handleGameOver}
             onBackToSpin={handleBackToSpin}
             updatePlayerStats={handlePlayerStatsUpdate}
           />

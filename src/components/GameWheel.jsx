@@ -5,6 +5,7 @@ export default function SpinWheel({
   onSpinComplete,
   showSpin = true,
   animation = false,
+  spintime
 }) {
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
@@ -34,7 +35,7 @@ export default function SpinWheel({
       if (onSpinComplete) {
         onSpinComplete(winnerName);
       }
-    }, 4000);
+    }, spintime+500); // Add a small buffer to ensure animation completes
   };
 
   return (
@@ -44,10 +45,11 @@ export default function SpinWheel({
         
         {/* Spinning layer */}
         <div
-          className={`absolute inset-0 transition-transform duration-[4000ms] ease-out ${
+          className={`absolute inset-0 transition-transform ease-out ${
             animation ? "animate-[spin_14s_linear_infinite]" : ""
           }`}
-          style={{ transform: `rotate(${rotation}deg)` }}
+          style={{ transform: `rotate(${rotation}deg)` ,
+                  transitionDuration: spinning ? `${spintime}ms` : '0ms'}}
         >
           {/* Outer Energy Ring */}
           <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-red-500/40 border-r-blue-500/30 border-b-purple-500/30 border-l-cyan-500/20" />

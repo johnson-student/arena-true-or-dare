@@ -8,8 +8,40 @@ const truthCards = [
   "Who in this room do you find most attractive?",
   "What's something you're afraid of?",
   "What's the last lie you told?",
-  "Have you ever pretended to be sick to avoid something?"
-];
+  "Have you ever pretended to be sick to avoid something?",
+  "What's the worst gift you've ever given someone?",
+  "Have you ever stolen something?",
+  "What's something you regret saying?",
+  "What's the biggest risk you've ever taken?",
+  "Have you ever broken something and hidden it?",
+  "What's something you're insecure about?",
+  "What's the biggest mistake you've made at work/school?",
+  "Have you ever pretended to be someone else online?",
+  "What's something you've never told your parents?",
+  "What's the worst date you've ever been on?",
+  "Have you ever cheated on a test?",
+  "What's something you're jealous of?",
+  "What's the biggest argument you've had with a friend?",
+  "Have you ever ghosted someone? Why?",
+  "What's something you've been blamed for that wasn't your fault?",
+  "What's your biggest pet peeve about someone in this room?",
+  "Have you ever pretended to be busy to avoid someone?",
+  "What's something you've lied about to make yourself look better?",
+  "What's the most trouble you've gotten into at school/work?",
+  "Have you ever read someone else's messages without permission?",
+  "What's something you've done that no one knows about?",
+  "What's the biggest lesson you've learned from a failure?",
+  "What's something you've been pretending to like?",
+  "Have you ever ignored a friend in need?",
+  "What's something you're ashamed of?",
+  "What's the meanest thing you've ever said to someone?",
+  "Have you ever spread a rumor?",
+  "What's something you've been holding back from saying?",
+  "What's your biggest fear about the future?",
+  "Have you ever lied to get out of trouble?",
+  "What's something you'd change about your past?",
+  "What's the most childish thing you still do?"
+  ];
 
 const dareCards = [
   "Do 10 jumping jacks right now.",
@@ -19,8 +51,40 @@ const dareCards = [
   "Imitate the person to your right for 60 seconds.",
   "Show your last 3 photos on your phone.",
   "Sing the chorus of your favorite song.",
-  "Make a funny face and freeze for 5 seconds."
-];
+  "Make a funny face and freeze for 5 seconds.",
+  "Do 15 squats right now.",
+  "Send a selfie to the 3rd person in your contacts.",
+  "Let someone write something on your forehead.",
+  "Dance like no one's watching for 15 seconds.",
+  "Speak in a funny accent for the next 2 rounds.",
+  "Show your search history to the group.",
+  "Do 5 pushups right now.",
+  "Post an embarrassing photo on your story.",
+  "Let the group choose your profile picture for 1 hour.",
+  "Pretend to be a famous person until your next turn.",
+  "Send a voice note saying something silly to a friend.",
+  "Do a dramatic reading of the last text you sent.",
+  "Let someone tickle you for 5 seconds.",
+  "Trade an item of clothing with someone.",
+  "Make three animal sounds in a row.",
+  "Show the last thing you Googled.",
+  "Do 20 high knees right now.",
+  "Send 'I love you' to your 5th contact.",
+  "Let someone give you a nickname for the rest of the game.",
+  "Act out your favorite movie scene.",
+  "Say something flirty to the person on your left.",
+  "Do a handstand against the wall (or try to).",
+  "Let the group ask you a personal question.",
+  "Pretend to be a waiter and take everyone's order.",
+  "Send a random emoji to your last chat.",
+  "Do 10 arm circles forward and backward.",
+  "Let someone look through your camera roll for 10 seconds.",
+  "Make up a short rap about someone in the room.",
+  "Do a dramatic slow-motion walk across the room.",
+  "Imitate a famous celebrity until your next turn.",
+  "Send a text with only emojis and have someone guess what it means.",
+  "Let the group give you a challenge to complete before your next turn."
+  ];
 
 export default function TruthDareGame({ 
   playerName, 
@@ -28,7 +92,6 @@ export default function TruthDareGame({
   initialAbilities = 2,
   initialCompletedRounds = 0,
   maxAbilities = 5, // Maximum abilities limit from settings
-  onGameOver,
   onBackToSpin,
   updatePlayerStats 
 }) {
@@ -75,7 +138,6 @@ export default function TruthDareGame({
     let newAbilities = abilities;
     let newCompleted = completedRounds;
     let earnedAbility = false;
-    let abilityEarnedNow = false;
     
     if (success) {
       // COMPLETE - gain progress
@@ -95,7 +157,6 @@ export default function TruthDareGame({
         } else {
           // Can earn new ability
           newAbilities = abilities + 1;
-          abilityEarnedNow = true;
           earnedAbility = true;
           setJustEarnedAbility(true);
           console.log(`${playerName} earned an ability! New abilities: ${newAbilities} (Max: ${maxAbilities})`);
@@ -147,15 +208,15 @@ export default function TruthDareGame({
     }
   };
 
-  const resetGame = () => {
-    setLives(initialLives);
-    setAbilities(initialAbilities);
-    setCompletedRounds(initialCompletedRounds);
-    setCurrentChallenge(null);
-    setGameState('lobby');
-    setJustEarnedAbility(false);
-    setMaxAbilitiesReached(false);
-  };
+  // const resetGame = () => {
+  //   setLives(initialLives);
+  //   setAbilities(initialAbilities);
+  //   setCompletedRounds(initialCompletedRounds);
+  //   setCurrentChallenge(null);
+  //   setGameState('lobby');
+  //   setJustEarnedAbility(false);
+  //   setMaxAbilitiesReached(false);
+  // };
 
   const cardRevealStyle = `
     @keyframes cardReveal {
