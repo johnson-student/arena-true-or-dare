@@ -44,6 +44,11 @@ export default function SpinWheel({
     setSpinning(false);
   };
 
+  const rotateWheel = ()=>{
+      const getRandom = Math.random() * (360 - rotation) + 80 ;
+      
+      setRotation(getRandom);
+  }
   return (
     <div className="flex flex-col items-center gap-6">
       {/* WHEEL */}
@@ -122,6 +127,7 @@ export default function SpinWheel({
 
       {/* Spin Button */}
       {showSpin && (
+        <>
         <button
           onClick={spinWheel}
           disabled={spinning || players.length === 0}
@@ -129,6 +135,15 @@ export default function SpinWheel({
         >
           {spinning ? "Spinning..." : "SPIN"}
         </button>
+  
+         <button
+              onClick={() => rotateWheel()}
+              className="absolute text-2xl top-6 lg:top-5 right-20 md:right-[85%] md:top-5 z-30 p-3 rounded-lg bg-[#111126] border shadow-[0_0_50px_rgb(220,38,38,0.4)] border-blue-500/30 hover:bg-blue-600/20 transition"
+            >
+              💫
+          </button>
+        </>
+        
       )}
     </div>
   );
