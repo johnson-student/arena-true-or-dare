@@ -3,8 +3,8 @@ import React, { useState } from "react";
 
 export default function TruthDareGame({ 
   playerName, 
-  initialLives = 3, 
-  initialAbilities = 2,
+  initialLives, 
+  initialAbilities,
   initialCompletedRounds = 0,
   maxAbilities = 5, // Maximum abilities limit from settings
   onBackToSpin,
