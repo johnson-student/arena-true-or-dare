@@ -8,10 +8,10 @@ export default function Navbar() {
       {/* Logo */}
       <div className="flex items-center gap-2">
         <div className="relative w-8 h-8 bg-gradient-to-br from-red-500 to-blue-600 rounded-lg flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(239,68,68,0.5)]">
-          SL
+          TD
         </div>
         <Link to="/" className="text-xl font-black tracking-wider uppercase cursor-pointer ">
-          Spin Legends
+          True or Dare
         </Link>
       </div>
 

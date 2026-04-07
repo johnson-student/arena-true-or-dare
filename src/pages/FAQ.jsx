@@ -90,7 +90,7 @@ export default function FAQ() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#050816] text-white">
+    <div className="relative min-h-screen overflow-hidden  text-white">
       {/* Background Glow */}
       <div className="absolute inset-0">
         <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] bg-pink-500/20 blur-[120px] rounded-full" />
