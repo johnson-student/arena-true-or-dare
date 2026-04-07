@@ -10,6 +10,7 @@ export default function SpinWheel({
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [showWinner, setShowWinner] = useState(false);
 
   const spinWheel = () => {
     if (spinning || players.length === 0) return;
@@ -31,11 +32,14 @@ export default function SpinWheel({
 
       setSpinning(false);
       setWinner(winnerName);
+      setShowWinner(true);
 
-      if (onSpinComplete) {
-        onSpinComplete(winnerName);
-      }
     }, spintime+500); // Add a small buffer to ensure animation completes
+  };
+
+  const isComplete = winner => {
+    onSpinComplete(winner);
+    setSpinning(false);
   };
 
   return (
@@ -97,6 +101,22 @@ export default function SpinWheel({
         {/* Pointer */}
         <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[24px] border-b-red-400 z-20" />
       </div>
+
+    {showWinner && winner && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-2xl p-8 text-center shadow-[0_10px_15px_rgba(59,130,246,0.6)] border-2 border-blue-300  animate-bounce-in max-w-md mx-4">
+            <div className="text-6xl mb-4">🎮</div>
+            <h2 className="text-3xl font-bold text-yellow-400 mb-2">Your Turn</h2>
+            <p className="text-2xl text-white font-bold mb-4">{winner}</p>
+            <button
+              onClick={() => isComplete(winner)}
+              className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-600 to-green-500 text-white font-bold hover:scale-105 transition"
+            >
+              Choose Fate
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Spin Button */}
       {showSpin && (

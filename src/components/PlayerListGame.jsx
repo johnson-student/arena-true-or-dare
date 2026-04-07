@@ -153,19 +153,13 @@ export default function PlayerListGame({
                   </div>
                 </div>
                 
-                {/* Status Badge */}
-                {isDead ? (
-                  <span className="text-[10px] font-bold text-red-400 bg-red-500/20 px-2 py-0.5 rounded-full">
-                    ELIMINATED
-                  </span>
-                ) : (
+
                   <button
                     onClick={() => handleRemovePlayer(index)}
                     className="text-red-500 font-bold px-2 py-1 text-xs rounded-md hover:bg-red-500/10 transition"
                   >
                     Remove
                   </button>
-                )}
               </div>
             );
           })
