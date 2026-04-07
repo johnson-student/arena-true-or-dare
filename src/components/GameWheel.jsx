@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-export default function SpinWheel({ players = [], onSpinComplete }) {
+export default function SpinWheel({
+  players = [],
+  onSpinComplete,
+  showSpin = true,
+  animation = false,
+}) {
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(null);
@@ -19,13 +24,13 @@ export default function SpinWheel({ players = [], onSpinComplete }) {
 
     setTimeout(() => {
       const normalized = newRotation % 360;
-      const index = Math.floor((360 - normalized) / anglePerSlice) % players.length;
+      const index =
+        Math.floor((360 - normalized) / anglePerSlice) % players.length;
       const winnerName = players[index];
-      
+
       setSpinning(false);
       setWinner(winnerName);
-      
-      // Call parent callback with winner
+
       if (onSpinComplete) {
         onSpinComplete(winnerName);
       }
@@ -39,7 +44,9 @@ export default function SpinWheel({ players = [], onSpinComplete }) {
         
         {/* Spinning layer */}
         <div
-          className="absolute inset-0 transition-transform duration-[4000ms] ease-out"
+          className={`absolute inset-0 transition-transform duration-[4000ms] ease-out ${
+            animation ? "animate-[spin_14s_linear_infinite]" : ""
+          }`}
           style={{ transform: `rotate(${rotation}deg)` }}
         >
           {/* Outer Energy Ring */}
@@ -68,7 +75,9 @@ export default function SpinWheel({ players = [], onSpinComplete }) {
                 {/* Player name */}
                 <div
                   className="absolute top-1/2 left-1/2 origin-center -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
-                  style={{ transform: `rotate(${textRotation}deg) translateY(-225px)` }}
+                  style={{
+                    transform: `rotate(${textRotation}deg) translateY(-225px)`,
+                  }}
                 >
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 text-[15px] font-bold whitespace-nowrap text-blue-400">
                     {player}
@@ -89,13 +98,15 @@ export default function SpinWheel({ players = [], onSpinComplete }) {
       </div>
 
       {/* Spin Button */}
-      <button
-        onClick={spinWheel}
-        disabled={spinning || players.length === 0}
-        className="cursor-pointer mt-10 px-10 py-5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {spinning ? "Spinning..." : "SPIN"}
-      </button>
+      {showSpin && (
+        <button
+          onClick={spinWheel}
+          disabled={spinning || players.length === 0}
+          className="cursor-pointer mt-10 px-10 py-5 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {spinning ? "Spinning..." : "SPIN"}
+        </button>
+      )}
     </div>
   );
 }

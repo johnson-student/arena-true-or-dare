@@ -20,14 +20,14 @@ export default function Navbar() {
         <NavLink to="/" className={navLinkClass}>
           Home
         </NavLink>
-        <NavLink to="/features" className={navLinkClass}>
-          Features
+        <NavLink to="/game" className={navLinkClass}>
+          Play
         </NavLink>
         <NavLink to="/how-it-works" className={navLinkClass}>
           How It Works
         </NavLink>
-        <NavLink to="/leaderboards" className={navLinkClass}>
-          Leaderboards
+        <NavLink to="/about" className={navLinkClass}>
+          About Us
         </NavLink>
         <NavLink to="/faq" className={navLinkClass}>
           FAQ
