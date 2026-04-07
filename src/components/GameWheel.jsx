@@ -20,7 +20,7 @@ export default function SpinWheel({
     setSpinning(true);
 
     const anglePerSlice = 360 / players.length;
-    const extraSpins = 5 * 360;
+    const extraSpins = spintime/100 * 360;
     const randomOffset = Math.random() * 360;
 
     const newRotation = rotation + extraSpins + randomOffset;
@@ -36,7 +36,7 @@ export default function SpinWheel({
       setWinner(winnerName);
       setShowWinner(true);
 
-    }, spintime+500); // Add a small buffer to ensure animation completes
+    }, spintime+1000); // Add a small buffer to ensure animation completes
   };
 
   const isComplete = winner => {

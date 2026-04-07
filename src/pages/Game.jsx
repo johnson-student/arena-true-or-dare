@@ -294,7 +294,7 @@ const Game = () => {
             />
             <button
               onClick={() => rotateWheel()}
-              className="absolute text-2xl top-6 lg:top-25 right-20 lg:right-[79%]  md:right-25 md:top-5 z-30 p-3 rounded-lg bg-[#111126] border shadow-[0_0_50px_rgb(220,38,38,0.4)] border-blue-500/30 hover:bg-blue-600/20 transition"
+              className="absolute text-2xl top-6 lg:top-25 right-20 lg:right-[79%]  md:right-[90%] md:top-5 z-30 p-3 rounded-lg bg-[#111126] border shadow-[0_0_50px_rgb(220,38,38,0.4)] border-blue-500/30 hover:bg-blue-600/20 transition"
             >
               💫
             </button>

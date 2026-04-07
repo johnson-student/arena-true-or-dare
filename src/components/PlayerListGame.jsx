@@ -55,7 +55,7 @@ export default function PlayerListGame({
   };
 
   return (
-    <div className="w-[350px] md:w-[400px] h-[500px] bg-[#0c0c1e]/90 border border-[#ff3b5c]/40 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(255,59,92,0.2)] backdrop-blur-md p-4 flex flex-col gap-3">
+    <div className="w-[350px] md:w-[400px] h-[600px] bg-[#0c0c1e]/90 border border-[#ff3b5c]/40 rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(255,59,92,0.2)] backdrop-blur-md p-4 flex flex-col gap-3">
       {/* Input Section */}
       <div className="flex gap-2 mb-2">
         <input
@@ -83,7 +83,7 @@ export default function PlayerListGame({
       {players.length > 0 && (
         <button
           onClick={handleRemoveAll}
-          className="w-full px-3 py-1 text-xs font-bold text-red-500 border border-red-500/50 rounded-md hover:bg-red-500/10 transition"
+          className="w-full px-3 py-1 h-[3rem] text-xs font-bold text-red-500 border border-red-500/50 rounded-md hover:bg-red-500/10 transition"
         >
           Remove All Players
         </button>
