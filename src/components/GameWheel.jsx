@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 
 export default function SpinWheel({
+  rotation,
+  setRotation,
   players = [],
   onSpinComplete,
   showSpin = true,
   animation = false,
   spintime
 }) {
-  const [rotation, setRotation] = useState(0);
+  
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(null);
   const [showWinner, setShowWinner] = useState(false);

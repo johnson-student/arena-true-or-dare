@@ -36,7 +36,7 @@ export default function Setting({
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">⚙️ Settings</h2>
-          <button onClick={onClose} className="text-red-400 hover:text-red-300 transition">✕</button>
+          <button onClick={onClose} className= "text-red-400 text-3xl hover:text-red-300 transition">✕</button>
         </div>
 
         {/* Lives */}
